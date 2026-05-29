@@ -4,6 +4,9 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     bot_token: str
     reply_strategy: str = "predefined"
+    detection_strategy: str = "fasttext"
+    model_path: str = "model/goodnight.bin"
+    detection_threshold: float = 0.5
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 

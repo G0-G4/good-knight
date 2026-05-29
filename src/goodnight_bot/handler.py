@@ -3,7 +3,7 @@ import logging
 from aiogram import Router
 from aiogram.types import BusinessConnection, Message
 
-from goodnight_bot.detector import is_goodnight
+from goodnight_bot.detectors.base import DetectorStrategy
 from goodnight_bot.replies.base import ReplyStrategy
 
 logger = logging.getLogger(__name__)
@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 _active_connections: dict[str, BusinessConnection] = {}
 
 
-def create_router(strategy: ReplyStrategy) -> Router:
+def create_router(detector: DetectorStrategy, strategy: ReplyStrategy) -> Router:
     router = Router()
 
     @router.business_connection()
@@ -40,7 +40,7 @@ def create_router(strategy: ReplyStrategy) -> Router:
             return
 
         text = message.text or message.caption
-        if not text or not is_goodnight(text):
+        if not text or not detector.is_goodnight(text):
             return
 
         reply = await strategy.generate_reply(text)

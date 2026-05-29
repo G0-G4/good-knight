@@ -1,5 +1,7 @@
 import re
 
+from goodnight_bot.detectors.base import DetectorStrategy
+
 _PATTERNS = [
     r"споко[йь]н(?!о(?!й))",
     r"спок[аоиы]?[йь]н(?!о(?!й))",
@@ -16,7 +18,8 @@ _COMBINED = re.compile(
 )
 
 
-def is_goodnight(text: str) -> bool:
-    if not text:
-        return False
-    return bool(_COMBINED.search(text))
+class RegexDetector(DetectorStrategy):
+    def is_goodnight(self, text: str) -> bool:
+        if not text:
+            return False
+        return bool(_COMBINED.search(text))
