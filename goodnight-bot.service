@@ -1,0 +1,17 @@
+[Unit]
+Description=Goodnight Telegram Bot (secretary mode)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=goodnight-bot
+Group=goodnight-bot
+WorkingDirectory=
+ExecStart=/root/.local/bin/uv run good-knight
+EnvironmentFile=
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
