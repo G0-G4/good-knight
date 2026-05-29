@@ -12,9 +12,11 @@ from goodnight_bot.detectors.regex import RegexDetector
 from goodnight_bot.handler import create_router
 from goodnight_bot.replies.base import ReplyStrategy
 from goodnight_bot.replies.predefined import PredefinedListStrategy
+from goodnight_bot.replies.template import TemplateStrategy
 
 _REPLY_STRATEGIES: dict[str, type[ReplyStrategy]] = {
     "predefined": PredefinedListStrategy,
+    "template": TemplateStrategy,
 }
 
 _DETECTION_STRATEGIES: dict[str, type[DetectorStrategy]] = {
