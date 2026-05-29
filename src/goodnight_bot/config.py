@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     bot_token: str
-    reply_strategy: str = "predefined"
+    reply_strategy: str = "template"
     detection_strategy: str = "fasttext"
     model_path: str = "model/goodnight.bin"
     detection_threshold: float = 0.5
