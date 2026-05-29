@@ -35,11 +35,7 @@ def create_router(strategy: ReplyStrategy) -> Router:
             return
 
         connection = _active_connections.get(connection_id)
-        if not connection:
-            logger.warning("Unknown business connection: %s", connection_id)
-            return
-
-        if not connection.can_reply:
+        if connection and not connection.can_reply:
             logger.debug("No reply permission for connection: %s", connection_id)
             return
 
@@ -48,10 +44,7 @@ def create_router(strategy: ReplyStrategy) -> Router:
             return
 
         reply = await strategy.generate_reply(text)
-        await message.answer(
-            reply,
-            business_connection_id=connection_id,
-        )
+        await message.answer(reply)
         logger.info("Replied in connection %s: %s", connection_id, reply[:50])
 
     return router

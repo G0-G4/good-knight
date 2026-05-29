@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
@@ -25,7 +26,7 @@ def _resolve_strategy(name: str) -> ReplyStrategy:
     return cls()
 
 
-async def main() -> None:
+async def _run() -> None:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)-8s %(name)s  %(message)s",
@@ -43,3 +44,7 @@ async def main() -> None:
 
     logger.info("Starting goodnight-bot with strategy=%s", settings.reply_strategy)
     await dp.start_polling(bot)
+
+
+def main() -> None:
+    asyncio.run(_run())
