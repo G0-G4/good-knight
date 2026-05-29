@@ -1,0 +1,17 @@
+[project]
+name = "goodnight-bot"
+version = "0.1.0"
+description = "Telegram secretary bot that detects 'спокойной ночи' messages and replies with funny responses"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiogram>=3.15",
+    "pydantic-settings>=2.7",
+]
+
+[project.scripts]
+goodnight-bot = "goodnight_bot.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
