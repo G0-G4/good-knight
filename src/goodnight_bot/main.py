@@ -1,5 +1,7 @@
 import asyncio
 import logging
+import logging.handlers
+import os
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
@@ -48,10 +50,25 @@ def _resolve_detection_strategy(name: str, model_path: str, threshold: float) ->
 
 
 async def _run() -> None:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s %(levelname)-8s %(name)s  %(message)s",
+    log_format = logging.Formatter("%(asctime)s %(levelname)-8s %(name)s  %(message)s")
+
+    os.makedirs("logs", exist_ok=True)
+
+    file_handler = logging.handlers.TimedRotatingFileHandler(
+        "logs/bot.log",
+        when="midnight",
+        backupCount=3,
+        encoding="utf-8",
     )
+    file_handler.setFormatter(log_format)
+
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(log_format)
+
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.INFO)
+    root_logger.addHandler(file_handler)
+    root_logger.addHandler(stream_handler)
 
     settings = get_settings()
     detector = _resolve_detection_strategy(settings.detection_strategy, settings.model_path, settings.detection_threshold)
