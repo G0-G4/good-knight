@@ -19,7 +19,15 @@ cp .env.example .env
 uv sync
 ```
 
-4. Run the bot:
+4. Generate the detection model (required for the `fasttext` detection strategy):
+
+```bash
+uv run python scripts/train_model.py
+```
+
+This reads training data from `data/train.txt` and saves the model to `model/goodnight.bin`. You can customize the path and training parameters — see `uv run python scripts/train_model.py --help`.
+
+5. Run the bot:
 
 ```bash
 uv run goodnight-bot
@@ -27,10 +35,13 @@ uv run goodnight-bot
 
 ## Configuration
 
-| Variable | Default | Description |
-|---|---|---|
-| `BOT_TOKEN` | *(required)* | Telegram bot token from @BotFather |
-| `REPLY_STRATEGY` | `predefined` | Reply generation strategy (`predefined`) |
+| Variable              | Default               | Description                                                              |
+|-----------------------|-----------------------|--------------------------------------------------------------------------|
+| `BOT_TOKEN`           | *(required)*          | Telegram bot token from @BotFather                                       |
+| `REPLY_STRATEGY`      | `predefined`          | Reply generation strategy (`predefined`)                                 |
+| `DETECTION_STRATEGY`  | `fasttext`            | Detection strategy (`fasttext`)                                          |
+| `MODEL_PATH`          | `model/goodnight.bin` | Path to the fastText model file (generate with `scripts/train_model.py`) |
+| `DETECTION_THRESHOLD` | `0.5`                 | Confidence threshold for detection                                       |
 
 ## Connecting to your profile
 
