@@ -79,7 +79,7 @@ async def _run() -> None:
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
     dp = Dispatcher()
-    dp.include_router(create_router(detector, strategy))
+    dp.include_router(create_router(bot, detector, strategy, goodnight_ttl=settings.goodnight_ttl))
 
     logger.info("Starting goodnight-bot with detection=%s strategy=%s", settings.detection_strategy, settings.reply_strategy)
     await dp.start_polling(bot)
@@ -87,3 +87,6 @@ async def _run() -> None:
 
 def main() -> None:
     asyncio.run(_run())
+
+if __name__ == '__main__':
+    main()
